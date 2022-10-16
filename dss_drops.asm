@@ -8,8 +8,6 @@
 .definelabel MysteryAddress1,0x80c389c
 .definelabel MysteryAddress2,0x80c3824
 
-.definelabel RngVal,0x0
-
 .org HackAddress
 .area ReturnAddress - HackAddress				; we are going to overwrite some instructions in the rom, so we need to make sure we don't accidentally overwrite too much
 	ldr		r0,=UnusedAddress+1
@@ -97,7 +95,7 @@ HasRareDssDrop:
 	bx		r7
 @@LrAddress1:
 	add		r4,r0,0x0
-	lsl		r4,r4,0x10							; (r0 & 0xffff)
+	lsl		r4,r4,0x10							; (r4 & 0xffff)
 	lsr		r4,r4,0x10
 	add		r0,r5,0x0
 	mov		r1,0xa
@@ -129,7 +127,7 @@ HasRareDssDrop:
 @@PlayerCantGetDssDrop:
 	b		NormalRng
 @@PlayerNeedsDssDrop:
-	add		r1,r6
+	mov		r1,r6								; load the minimum required rng value to drop a dss card
 	b		FinishedCustomRng
 
 PostNormalRng:
